@@ -68,6 +68,18 @@ final class ViewController: UIViewController, ViewConfig {
             
         case .moview:
             let vc = MovieViewController()
+            let yesterday = DateManager.shared.yesterday
+            print(yesterday)
+            
+            AF.request("\(Urls.boxOffice)\(yesterday)", method: .get).responseDecodable(of: MovieResponse.self) { response in
+                switch response.result {
+                case .success(let value):
+                    vc.movieList = value.boxOfficeResult.dailyBoxOfficeList
+                case .failure(let error):
+                    print(error)
+                }
+            }
+        
             let btn = UIButton(configuration: config, primaryAction: UIAction(handler: { _ in
                 self.navigationController?.pushViewController(vc, animated: true)
             }))

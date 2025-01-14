@@ -20,6 +20,10 @@
 		11F5A3C52D364F020015662B /* MovieViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F5A3C42D364F020015662B /* MovieViewController.swift */; };
 		11F5A3C82D3652810015662B /* Urls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F5A3C72D36527D0015662B /* Urls.swift */; };
 		11F5A3CB2D366EC30015662B /* UIScreen+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F5A3CA2D366EBE0015662B /* UIScreen+.swift */; };
+		11F5A3D02D367CA00015662B /* Movie.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F5A3CF2D367CA00015662B /* Movie.swift */; };
+		11F5A3D22D367CAF0015662B /* Lotto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F5A3D12D367CAB0015662B /* Lotto.swift */; };
+		11F5A3D52D3685FC0015662B /* DateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F5A3D42D3685F10015662B /* DateManager.swift */; };
+		11F5A3D72D368E3A0015662B /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11F5A3D62D368E320015662B /* UIViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +39,10 @@
 		11F5A3C42D364F020015662B /* MovieViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieViewController.swift; sourceTree = "<group>"; };
 		11F5A3C72D36527D0015662B /* Urls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Urls.swift; sourceTree = "<group>"; };
 		11F5A3CA2D366EBE0015662B /* UIScreen+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+.swift"; sourceTree = "<group>"; };
+		11F5A3CF2D367CA00015662B /* Movie.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Movie.swift; sourceTree = "<group>"; };
+		11F5A3D12D367CAB0015662B /* Lotto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Lotto.swift; sourceTree = "<group>"; };
+		11F5A3D42D3685F10015662B /* DateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateManager.swift; sourceTree = "<group>"; };
+		11F5A3D62D368E320015662B /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -97,6 +105,8 @@
 		11F5A3B02D364D240015662B /* AlamofirePractice */ = {
 			isa = PBXGroup;
 			children = (
+				11F5A3D32D3685E50015662B /* Utility */,
+				11F5A3CE2D367C920015662B /* Model */,
 				11F5A3C92D366EB70015662B /* Extension */,
 				11F5A3C62D3652750015662B /* Network */,
 				11F5A3A82D364D240015662B /* App */,
@@ -120,9 +130,27 @@
 		11F5A3C92D366EB70015662B /* Extension */ = {
 			isa = PBXGroup;
 			children = (
+				11F5A3D62D368E320015662B /* UIViewController.swift */,
 				11F5A3CA2D366EBE0015662B /* UIScreen+.swift */,
 			);
 			path = Extension;
+			sourceTree = "<group>";
+		};
+		11F5A3CE2D367C920015662B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				11F5A3D12D367CAB0015662B /* Lotto.swift */,
+				11F5A3CF2D367CA00015662B /* Movie.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		11F5A3D32D3685E50015662B /* Utility */ = {
+			isa = PBXGroup;
+			children = (
+				11F5A3D42D3685F10015662B /* DateManager.swift */,
+			);
+			path = Utility;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -208,9 +236,13 @@
 			files = (
 				11F5A3C32D364EF60015662B /* LottoViewController.swift in Sources */,
 				11F5A3B12D364D240015662B /* AppDelegate.swift in Sources */,
+				11F5A3D72D368E3A0015662B /* UIViewController.swift in Sources */,
+				11F5A3D02D367CA00015662B /* Movie.swift in Sources */,
 				11F5A3B22D364D240015662B /* SceneDelegate.swift in Sources */,
 				11F5A3CB2D366EC30015662B /* UIScreen+.swift in Sources */,
 				11F5A3B82D364D3E0015662B /* ViewConfig.swift in Sources */,
+				11F5A3D22D367CAF0015662B /* Lotto.swift in Sources */,
+				11F5A3D52D3685FC0015662B /* DateManager.swift in Sources */,
 				11F5A3B32D364D240015662B /* ViewController.swift in Sources */,
 				11F5A3C82D3652810015662B /* Urls.swift in Sources */,
 				11F5A3C52D364F020015662B /* MovieViewController.swift in Sources */,
