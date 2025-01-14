@@ -18,6 +18,7 @@ class LottoViewController: UIViewController, ViewConfig {
     private let resultLabel = UILabel()
     private let stackView = UIStackView()
     private let bnusLabel = UILabel()
+    private let pickerView = UIPickerView()
     
     lazy var textField = UITextField()
     lazy var firstNo = makeCircledLabelView(text: fetchedData.drwtNo1, textColor: .white, bgColor: .systemYellow, size: ballSize)
@@ -54,15 +55,19 @@ class LottoViewController: UIViewController, ViewConfig {
         }
     }
     
+    var numArray: [String] {
+        let arr: [String] = Array(1...1154).map { String($0) }.reversed()
+        return arr
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        fetchLotto(drwNo: 1154)
         configHierarchy()
         configLayout()
         configView()
 //        print(ballSize)
 //        print(bnusLabel.subviews[0])
-        print(#function, fetchedData)
+//        print(#function, fetchedData)
     }
 
     func configView() {
@@ -72,6 +77,7 @@ class LottoViewController: UIViewController, ViewConfig {
             $0.textAlignment = .center
             $0.placeholder = "회차를 선택해주세요."
             $0.borderStyle = .roundedRect
+            $0.inputView = pickerView
         }
         
         notiLabel.do {
@@ -86,19 +92,19 @@ class LottoViewController: UIViewController, ViewConfig {
         }
         
         resultLabel.do {
-            let attributedText = NSMutableAttributedString(
-                string: "\(fetchedData.drwNo)회 당첨결과",
-                attributes: [
-                    .font : UIFont.systemFont(ofSize: 24),
-                ]
-            )
-        
-            attributedText.addAttributes([
-                .foregroundColor : UIColor.systemYellow
-            ], range: NSRange(location: 0, length: 5)
-            )
+//            let attributedText = NSMutableAttributedString(
+//                string:
+//                attributes: [
+//                    .font : UIFont.systemFont(ofSize: 24),
+//                ]
+//            )
+//
+//            attributedText.addAttributes([
+//                .foregroundColor : UIColor.systemYellow
+//            ], range: NSRange(location: 0, length: 5)
+//            )
             
-            $0.attributedText = attributedText
+            $0.attributedText = addAttributeToResultLabel(text: "\(fetchedData.drwNo)회 당첨결과")
         }
         
         stackView.do {
@@ -112,6 +118,11 @@ class LottoViewController: UIViewController, ViewConfig {
             $0.text = "보너스"
             $0.textColor = .gray
             $0.font = .systemFont(ofSize: 12)
+        }
+        
+        pickerView.do {
+            $0.delegate = self
+            $0.dataSource = self
         }
         
         print(#function)
@@ -204,7 +215,10 @@ class LottoViewController: UIViewController, ViewConfig {
             switch response.result {
             case .success(let value):
                 self.fetchedData = value
-                
+                self.dateLabel.text = value.drwNoDate
+                self.resultLabel.attributedText = self.addAttributeToResultLabel(text: "\(value.drwNo)회 당첨결과")
+                self.updateCircleView(lotto: value)
+                self.secondNo.backgroundColor = .lightGray
                 print("fetched Data")
             case .failure(let error):
                 print(error)
@@ -215,7 +229,7 @@ class LottoViewController: UIViewController, ViewConfig {
     }
     
     func makeCircledLabelView(text: String, textColor: UIColor, bgColor: UIColor, size: Int) -> UIView {
-        print(#function)
+//        print(#function)
         let size = CGFloat(size)
         let view = UIView().then {
             $0.backgroundColor = bgColor
@@ -255,40 +269,131 @@ class LottoViewController: UIViewController, ViewConfig {
         label.snp.makeConstraints { $0.center.equalToSuperview() }
         return view
     }
+    
+    func addAttributeToResultLabel(text: String) -> NSAttributedString {
+        let attributedText = NSMutableAttributedString(
+            string: text,
+            attributes: [
+                .font : UIFont.systemFont(ofSize: 24),
+            ]
+        )
+        attributedText.addAttributes([
+            .foregroundColor : UIColor.systemYellow
+        ], range: NSRange(location: 0, length: 5)
+        )
+        
+        return attributedText
+    }
+    
+    func updateCircleView(lotto: Lotto) {
+        if firstNo.subviews[0] is UILabel {
+            let label = firstNo.subviews[0] as! UILabel
+            label.text = "\(lotto.drwtNo1)"
+            firstNo.backgroundColor = returnBgColor(no: lotto.drwtNo1)
+        }
+        if secondNo.subviews[0] is UILabel {
+            let label = secondNo.subviews[0] as! UILabel
+            label.text = "\(lotto.drwtNo2)"
+            secondNo.backgroundColor = returnBgColor(no: lotto.drwtNo2)
+        }
+        if thirdNo.subviews[0] is UILabel {
+            let label = thirdNo.subviews[0] as! UILabel
+            label.text = "\(lotto.drwtNo3)"
+            thirdNo.backgroundColor = returnBgColor(no: lotto.drwtNo3)
+        }
+        if fourthNo.subviews[0] is UILabel {
+            let label = fourthNo.subviews[0] as! UILabel
+            label.text = "\(lotto.drwtNo4)"
+            fourthNo.backgroundColor = returnBgColor(no: lotto.drwtNo4)
+        }
+        if fifthNo.subviews[0] is UILabel {
+            let label = fifthNo.subviews[0] as! UILabel
+            label.text = "\(lotto.drwtNo5)"
+            fifthNo.backgroundColor = returnBgColor(no: lotto.drwtNo5)
+        }
+        if sixthNo.subviews[0] is UILabel {
+            let label = sixthNo.subviews[0] as! UILabel
+            label.text = "\(lotto.drwtNo6)"
+            sixthNo.backgroundColor = returnBgColor(no: lotto.drwtNo6)
+        }
+        if bnusNo.subviews[0] is UILabel {
+            let label = bnusNo.subviews[0] as! UILabel
+            label.text = "\(lotto.bnusNo)"
+            bnusNo.backgroundColor = returnBgColor(no: lotto.bnusNo)
+        }
+    }
+    
+    func returnBgColor(no: Int) -> UIColor {
+        switch no {
+        case 1...10:
+            return .systemYellow
+        case 11...20:
+            return .systemTeal.withAlphaComponent(0.7)
+        case 21...30:
+            return .systemPink.withAlphaComponent(0.7)
+        case 31...40:
+            return .lightGray
+        case 41...45:
+            return .green.withAlphaComponent(0.5)
+        default:
+            print("번호 범위 벗어남")
+            return .clear
+        }
+    }
+}
+
+extension LottoViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        numArray.count
+    }
+    
+    func numberOfComponents(in pickerView: UIPickerView) -> Int {
+        1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+        numArray[row]
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+        fetchLotto(drwNo: Int(numArray[row]) ?? 0)
+        textField.text = numArray[row]
+    }
+    
 }
 
 
-final class lottoNumberView: UIView {
-    
-    private let label = UILabel().then {
-        $0.font = .systemFont(ofSize: CGFloat(UIScreen.ballSize / 2))
-        $0.textAlignment = .center
-    }
-    
-    init(no: Int) {
-        super.init(frame: .zero)
-        configView()
-        label.text = "\(no)"
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    private func configView() {
-        self.backgroundColor = .systemBrown
-        self.addSubview(label)
-        self.clipsToBounds = true
-        self.frame = CGRect(x: 0, y: 0, width: UIScreen.ballSize, height: UIScreen.ballSize)
-        self.layer.cornerRadius = CGFloat(UIScreen.ballSize / 2)
-    }
-    
-    public func config(lottoNo: Int) {
-        label.text = "\(lottoNo)"
-        label.textColor = .white
-    }
-    public func config(lottoNo: String) {
-        label.text = lottoNo
-        label.textColor = .black
-    }
-}
+//final class lottoNumberView: UIView {
+//    
+//    private let label = UILabel().then {
+//        $0.font = .systemFont(ofSize: CGFloat(UIScreen.ballSize / 2))
+//        $0.textAlignment = .center
+//    }
+//    
+//    init(no: Int) {
+//        super.init(frame: .zero)
+//        configView()
+//        label.text = "\(no)"
+//    }
+//    
+//    required init?(coder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
+//    
+//    private func configView() {
+//        self.backgroundColor = .systemBrown
+//        self.addSubview(label)
+//        self.clipsToBounds = true
+//        self.frame = CGRect(x: 0, y: 0, width: UIScreen.ballSize, height: UIScreen.ballSize)
+//        self.layer.cornerRadius = CGFloat(UIScreen.ballSize / 2)
+//    }
+//    
+//    public func config(lottoNo: Int) {
+//        label.text = "\(lottoNo)"
+//        label.textColor = .white
+//    }
+//    public func config(lottoNo: String) {
+//        label.text = lottoNo
+//        label.textColor = .black
+//    }
+//}
